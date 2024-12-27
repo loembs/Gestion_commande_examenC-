@@ -17,5 +17,7 @@ namespace WebApplication1.Data
         public DbSet<WebApplication1.Models.Client> Client { get; set; } = default!;
         public DbSet<WebApplication1.Models.Commande> Commande { get; set; } = default!;
         public object Produits { get; internal set; }
+        public IEnumerable<object> Produit { get; internal set; }
+        public object Detail { get; internal set; }
     }
 }
