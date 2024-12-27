@@ -1,0 +1,59 @@
+﻿@model List<CommandeEnAttenteViewModel>
+
+<div class="bg-white rounded-lg shadow p-6">
+    <h2 class="text-2xl font-bold mb-6">Validation des Commandes</h2>
+
+    @foreach (var commande in Model)
+    {
+        <div class="border p-4 rounded mb-4">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h3 class="font-bold">Commande #@commande.Id</h3>
+                    <p class="text-sm text-gray-600">Client: @commande.Client.Nom @commande.Client.Prenom</p>
+                </div>
+                <span class="text-lg font-bold">@commande.Montant FCFA</span>
+            </div>
+
+            <div class="mt-4">
+                <h4 class="font-semibold mb-2">Produits commandés</h4>
+                <table class="w-full">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-4 py-2 text-left">Produit</th>
+                            <th class="px-4 py-2 text-center">Quantité demandée</th>
+                            <th class="px-4 py-2 text-center">Stock disponible</th>
+                            <th class="px-4 py-2 text-center">Statut</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var ligne in commande.LignesCommande)
+                        {
+                            <tr>
+                                <td class="px-4 py-2">@ligne.Produit.Libelle</td>
+                                <td class="px-4 py-2 text-center">@ligne.Quantite</td>
+                                <td class="px-4 py-2 text-center">@ligne.Produit.QuantiteStock</td>
+                                <td class="px-4 py-2 text-center">
+                                    <span class="px-2 py-1 rounded-full @(ligne.EstDisponible ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800")">
+                                        @(ligne.EstDisponible ? "Disponible" : "Indisponible")
+                                    </span>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mt-4 flex justify-end space-x-4">
+                <button onclick="mettreEnAttente(@commande.Id)"
+                        class="bg-yellow-600 text-white px-4 py-2 rounded">
+                    Mettre en attente
+                </button>
+                <button onclick="validerCommande(@commande.Id)"
+                        class="bg-green-600 text-white px-4 py-2 rounded"
+                @(!commande.LignesCommande.All(l => l.EstDisponible) ? "disabled" : "")>
+                    Valider la commande
+                </button>
+            </div>
+        </div>
+    }
+</div>

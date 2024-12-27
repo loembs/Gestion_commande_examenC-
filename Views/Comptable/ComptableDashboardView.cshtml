@@ -1,0 +1,52 @@
+﻿@model ComptableDashboardViewModel
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-bold mb-4">Statistiques du Jour</h2>
+        <div class="grid grid-cols-2 gap-4">
+            <div class="border p-4 rounded">
+                <p class="text-gray-600">Commandes</p>
+                <p class="text-2xl font-bold">@Model.CommandesJour</p>
+            </div>
+            <div class="border p-4 rounded">
+                <p class="text-gray-600">Livraisons</p>
+                <p class="text-2xl font-bold">@Model.LivraisonsJour</p>
+            </div>
+            <div class="border p-4 rounded">
+                <p class="text-gray-600">Paiements</p>
+                <p class="text-2xl font-bold">@Model.PaiementsJour FCFA</p>
+            </div>
+            <div class="border p-4 rounded">
+                <p class="text-gray-600">En attente</p>
+                <p class="text-2xl font-bold">@Model.CommandesEnAttente</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-bold mb-4">Historique des Versements</h2>
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-4 py-2 text-left">N°</th>
+                        <th class="px-4 py-2 text-left">Date</th>
+                        <th class="px-4 py-2 text-left">Client</th>
+                        <th class="px-4 py-2 text-right">Montant</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y">
+                    @foreach (var versement in Model.Versements)
+                    {
+                        <tr>
+                            <td class="px-4 py-2">@versement.Numero</td>
+                            <td class="px-4 py-2">@versement.Date.ToString("dd/MM/yyyy")</td>
+                            <td class="px-4 py-2">@versement.Client</td>
+                            <td class="px-4 py-2 text-right">@versement.Montant FCFA</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+﻿@model NouvelleCommandeViewModel
+
+<div class="bg-white rounded-lg shadow p-6">
+    <h2 class="text-2xl font-bold mb-6">Nouvelle Commande</h2>
+
+    <form asp-action="Create" method="post">
+        <div class="grid grid-cols-2 gap-6">
+            @foreach (var produit in Model.Produits)
+            {
+                <div class="border p-4 rounded">
+                    <img src="@produit.ImageUrl" alt="@produit.Libelle" class="w-full h-48 object-cover mb-4">
+                    <h3 class="font-bold">@produit.Libelle</h3>
+                    <p class="text-gray-600">Prix: @produit.PrixUnitaire FCFA</p>
+                    <p class="text-gray-600">Stock: @produit.QuantiteStock</p>
+                    <div class="mt-4">
+                        <input type="number" name="Quantites[@produit.Id]" class="w-full border p-2 rounded"
+                               min="1" max="@produit.QuantiteStock" placeholder="Quantité">
+                    </div>
+                </div>
+            }
+        </div>
+        <button type="submit" class="mt-6 bg-blue-900 text-white px-6 py-2 rounded">
+            Commander
+        </button>
+    </form>
+</div>
